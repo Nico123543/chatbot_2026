@@ -7,6 +7,8 @@ Ein vollständig lokaler Chatbot für Unternehmenswissen mit Avatar-UI.
 - RAG mit `LangChain + ChromaDB` (persistente Vektordatenbank)
 - LLM über `Ollama` (z. B. `phi3`, `llama3.2`)
 - Chat-UI mit Avatar-Status (`Idle` / `Talking`) via Gradio
+- Speech-to-Text (Mikrofon -> Textfeld, Whisper lokal)
+- Text-to-Speech (Antwort -> Audioausgabe, macOS `say`)
 - Ingest von `PDF`, `TXT`, `MD` aus lokaler Wissensbasis
 
 ## Projektstruktur
@@ -67,6 +69,14 @@ python app.py --model phi3
 
 Danach im Browser öffnen: `http://127.0.0.1:7860`
 Wenn `7860` belegt ist, wählt die App automatisch den nächsten freien Port.
+
+## Sprachfunktionen
+- `Sprache -> Text`: nimmt Mikrofon-Eingabe auf und schreibt den Text ins Fragefeld.
+- Bot-Antworten werden zusätzlich als Audio erzeugt und in `Sprachausgabe` abgespielt.
+
+Optional:
+- Stimme für TTS ändern: `TTS_VOICE=Anna` (oder eine lokal verfügbare macOS-Stimme)
+- STT komplett offline erzwingen (nur wenn Modell lokal vorhanden): `STT_LOCAL_ONLY=1`
 
 ## Offline-Hinweise
 - App bindet standardmäßig nur an `127.0.0.1`
