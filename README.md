@@ -1,0 +1,77 @@
+# Lokaler Unternehmens-Chatbot (Offline, Ollama + RAG)
+
+Ein vollständig lokaler Chatbot für Unternehmenswissen mit Avatar-UI.
+
+## Features
+- 100% lokal ausführbar auf dem Laptop (kein Cloud-Zwang)
+- RAG mit `LangChain + ChromaDB` (persistente Vektordatenbank)
+- LLM über `Ollama` (z. B. `phi3`, `llama3.2`)
+- Chat-UI mit Avatar-Status (`Idle` / `Talking`) via Gradio
+- Ingest von `PDF`, `TXT`, `MD` aus lokaler Wissensbasis
+
+## Projektstruktur
+
+```text
+.
+├── app.py
+├── ingest.py
+├── requirements.txt
+├── knowledge_base/
+├── vector_db/
+└── static/
+```
+
+## Voraussetzungen
+- Python 3.10+
+- Ollama lokal installiert
+
+## Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+## Modell lokal vorbereiten
+
+```bash
+ollama run phi3
+```
+
+## Wissensdatenbank vorbereiten
+1. Dateien (`.pdf`, `.txt`, `.md`) in `knowledge_base/` ablegen.
+2. Index erstellen:
+
+```bash
+python3 ingest.py
+```
+
+## App starten
+
+```bash
+python3 app.py --model phi3
+```
+
+Danach im Browser öffnen: `http://127.0.0.1:7860`
+
+## Offline-Hinweise
+- App bindet standardmäßig nur an `127.0.0.1`
+- Ollama-Host ist lokal (`127.0.0.1:11434`)
+- Embeddings laufen standardmäßig mit `local_files_only=True`
+
+Falls das Embedding-Modell noch nicht lokal vorhanden ist:
+
+```bash
+EMBEDDING_LOCAL_ONLY=0 python3 ingest.py
+```
+
+Danach wieder offline normal starten.
+
+## Avatar-Dateien
+Lege optional folgende Dateien in `static/`:
+- `avatar_idle.gif`
+- `avatar_talk.gif`
+
+Ohne diese Dateien wird ein lokaler Fallback-Avatar angezeigt.
+
+## Lizenz
+MIT (siehe `LICENSE`).

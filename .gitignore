@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+
+# Build/Test
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local data
+vector_db/*
+!vector_db/.gitkeep
+knowledge_base/*
+!knowledge_base/.gitkeep
+
+# Optional local avatar files
+static/avatar_idle.gif
+static/avatar_talk.gif
