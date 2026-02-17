@@ -5,15 +5,18 @@ import argparse
 import os
 from pathlib import Path
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+BASE_DIR = Path(__file__).resolve().parent
+os.environ.setdefault("HF_HOME", str(BASE_DIR / ".hf_cache"))
+
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader, TextLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 
 
-BASE_DIR = Path(__file__).resolve().parent
 KB_DIR = BASE_DIR / "knowledge_base"
 VECTOR_DB_DIR = BASE_DIR / "vector_db"
+HF_CACHE_DIR = BASE_DIR / ".hf_cache"
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 EMBEDDING_LOCAL_ONLY = os.getenv("EMBEDDING_LOCAL_ONLY", "1") == "1"
 
@@ -55,6 +58,7 @@ def load_documents(kb_dir: Path):
 
 
 def build_index(kb_dir: Path, vector_db_dir: Path):
+    os.environ.setdefault("HF_HOME", str(HF_CACHE_DIR))
     print(f"[INFO] Lade Dokumente aus: {kb_dir}")
     docs = load_documents(kb_dir)
     if not docs:

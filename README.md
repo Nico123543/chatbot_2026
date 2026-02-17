@@ -21,20 +21,32 @@ Ein vollständig lokaler Chatbot für Unternehmenswissen mit Avatar-UI.
 └── static/
 ```
 
-## Voraussetzungen
-- Python 3.10+
+## Voraussetzungen (ARM Mac)
+- macOS auf Apple Silicon (arm64)
+- Homebrew
+- Python 3.11
 - Ollama lokal installiert
+
+### Einmalige Systeminstallation
+
+```bash
+brew install python@3.11 ollama
+brew services start ollama
+ollama pull phi3
+```
 
 ## Installation
 
 ```bash
+/opt/homebrew/bin/python3.11 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ## Modell lokal vorbereiten
 
 ```bash
-ollama run phi3
+ollama list
 ```
 
 ## Wissensdatenbank vorbereiten
@@ -42,16 +54,19 @@ ollama run phi3
 2. Index erstellen:
 
 ```bash
-python3 ingest.py
+source .venv/bin/activate
+python ingest.py
 ```
 
 ## App starten
 
 ```bash
-python3 app.py --model phi3
+source .venv/bin/activate
+python app.py --model phi3
 ```
 
 Danach im Browser öffnen: `http://127.0.0.1:7860`
+Wenn `7860` belegt ist, wählt die App automatisch den nächsten freien Port.
 
 ## Offline-Hinweise
 - App bindet standardmäßig nur an `127.0.0.1`
@@ -61,7 +76,8 @@ Danach im Browser öffnen: `http://127.0.0.1:7860`
 Falls das Embedding-Modell noch nicht lokal vorhanden ist:
 
 ```bash
-EMBEDDING_LOCAL_ONLY=0 python3 ingest.py
+source .venv/bin/activate
+EMBEDDING_LOCAL_ONLY=0 python ingest.py
 ```
 
 Danach wieder offline normal starten.

@@ -23,3 +23,6 @@ knowledge_base/*
 # Optional local avatar files
 static/avatar_idle.gif
 static/avatar_talk.gif
+
+# Local model cache
+.hf_cache/
